@@ -7,7 +7,7 @@ const BASE_HEX = '0x2105';
 const BASE_PARAMS = { chainId: BASE_HEX, chainName: 'Base', nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }, rpcUrls: ['https://mainnet.base.org'], blockExplorerUrls: ['https://basescan.org'] };
 const USDC = { address: USDC_ADDRESS, symbol: 'USDC', decimals: 6 };
 const ASH = { address: ASH_ADDRESS, symbol: 'ASH', decimals: 18 };
-const short = (a) => a ? a.slice(0,6) + '\u2026' + a.slice(-4) : '';
+const short = (a) => a ? a.slice(0, 6) + '…' + a.slice(-4) : '';
 const eth = () => (typeof window !== 'undefined' ? window.ethereum : undefined);
 
 function App() {
@@ -99,25 +99,25 @@ function App() {
   };
 
   const label = () => {
-    if (status === 'approving') return 'Approvazione\u2026';
-    if (status === 'swapping') return 'Swap in corso\u2026';
+    if (status === 'approving') return 'Approvazione…';
+    if (status === 'swapping') return 'Swap in corso…';
     if (!(parseFloat(amount) > 0)) return 'Inserisci un importo';
     return 'Swap';
   };
 
-  const Pill = ({ ash }) => (<div className='pill'><span>{ash ? '\uD83D\uDD25' : '$'}</span>{ash ? 'ASH' : 'USDC'}</div>);
+  const Pill = ({ ash }) => (<div className='pill'><span>{ash ? '🔥' : '$'}</span>{ash ? 'ASH' : 'USDC'}</div>);
 
   return (
     <div className='page'><div className='card'>
       <div className='head'>
-        <h1 className='title'>\uD83D\uDD25 ASH Swap</h1>
+        <h1 className='title'>🔥 ASH Swap</h1>
         <button className='conn' onClick={connect}>{address ? short(address) : 'Connetti Wallet'}</button>
       </div>
       <div className='field'>
         <div className='frow'><span className='lbl'>Paghi</span><span className='bal'>Saldo: {parseFloat(fromBal).toLocaleString('en-US', { maximumFractionDigits: 4 })}</span></div>
         <div className='frow'><input className='inp' type='number' min='0' placeholder='0.0' value={amount} onChange={(e) => setAmount(e.target.value)} /><Pill ash={!isUsdcToAsh} /></div>
       </div>
-      <div className='swc'><button className='sw' onClick={toggle}>\u2193</button></div>
+      <div className='swc'><button className='sw' onClick={toggle}>↓</button></div>
       <div className='field'>
         <div className='frow'><span className='lbl'>Ricevi</span><span className='bal'>Saldo: {parseFloat(toBal).toLocaleString('en-US', { maximumFractionDigits: 4 })}</span></div>
         <div className='frow'><input className='inp' type='text' placeholder='0.0' value={out} readOnly /><Pill ash={isUsdcToAsh} /></div>
@@ -127,8 +127,8 @@ function App() {
         : !isOnBase ? (<button className='act' onClick={switchToBase}>Passa alla rete Base</button>)
         : (<button className='act' disabled={!canSwap} onClick={execute}>{label()}</button>)}
       {error && <div className='err'>{error}</div>}
-      {status === 'success' && txHash && <a className='ok' href={'https://basescan.org/tx/' + txHash} target='_blank' rel='noreferrer'>\u2705 Swap completato! Vedi su BaseScan</a>}
-      <div className='note'>Swap a prezzo fisso USDC \u2194 ASH sulla rete Base.<br/>Contratto: {short(SWAP_ADDRESS)}</div>
+      {status === 'success' && txHash && <a className='ok' href={'https://basescan.org/tx/' + txHash} target='_blank' rel='noreferrer'>✅ Swap completato! Vedi su BaseScan</a>}
+      <div className='note'>Swap a prezzo fisso USDC ↔ ASH sulla rete Base.<br/>Contratto: {short(SWAP_ADDRESS)}</div>
     </div></div>
   );
 }
